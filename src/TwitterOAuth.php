@@ -19,6 +19,7 @@ class TwitterOAuth extends Config
     const API_HOST = 'https://api.twitter.com';
     const UPLOAD_HOST = 'https://upload.twitter.com';
     const UPLOAD_CHUNK = 40960; // 1024 * 40
+    const IP_RESOLVE = 4;
 
     /** @var Response details about the result of the last request */
     private $response;
@@ -375,6 +376,7 @@ class TwitterOAuth extends Config
             CURLOPT_HTTPHEADER => ['Accept: application/json', $authorization, 'Expect:'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
+            CURLOPT_IPRESOLVE => self::IP_RESOLVE == 4 ? CURL_IPRESOLVE_V4 : CURL_IPRESOLVE_V6,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => $this->timeout,
             CURLOPT_URL => $url,
